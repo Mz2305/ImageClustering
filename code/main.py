@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from sklearn.cluster import KMeans
 
-name_image = "person"
+name_image = "colors"
 
 image = cv2.imread(f'resources/{name_image}.jpg')
 image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
@@ -14,7 +14,7 @@ image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 pixels = image.reshape((-1, 3)) # Each pixel is represented by its RGB values
 
 # KMeans
-number_of_colors = 32
+number_of_colors = 10
 kmeans = KMeans(n_clusters=number_of_colors)
 kmeans.fit(pixels)
 colors = np.array(kmeans.cluster_centers_, dtype='uint8')
@@ -29,6 +29,9 @@ ax[1].imshow(segmented_image)
 ax[1].set_title(f'Image with {number_of_colors} Dominant Colors')
 ax[1].axis('off')
 plt.show()
+
+# Change the pixel from RGB to GBR for cv2
+segmented_image = segmented_image[:, :, ::-1]
 
 output_path = os.path.join("output", f"output_{name_image}_{number_of_colors}.jpg")
 cv2.imwrite(output_path, segmented_image)
