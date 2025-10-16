@@ -12,7 +12,7 @@ Python project for image segmentation and color clustering using KMeans. The rep
 - `webcam/` — Webcam scripts
 	- `main_webcam.py` — interactive MiniBatchKMeans version with trackbars for `K` and `batch_size` and keyboard controls.
 
-## Image clustering (offline)
+## Image clustering
 
 1. Put an input image in `images/resources/` (e.g. `images/resources/colors.jpg`).
 2. Set the image name in `images/code/main_images.py` (variable `name_image`).
@@ -20,14 +20,14 @@ Python project for image segmentation and color clustering using KMeans. The rep
 4. In `images/output/` you will see `output_<name>_X.jpg`, that represent the segmented image (X may indicate the number of clusters).
 
 
-### Example — Before & After (with slider)
+### Example — Before & After
 
 | Original | Segmented |
 |---|---|
 | ![Original](images/resources/colors.jpg) | ![Segmented](images/output/output_colors_10.jpg) |
 | *images/resources/colors.jpg* | *images/output/output_colors_10.jpg* |
 
-## Webcam (live) — new project piece
+## Webcam clustering
 
 Run `webcam/main_webcam.py` — interactive MiniBatchKMeans version with UI controls:
   - "Controls" window with trackbars:
@@ -45,7 +45,7 @@ Run `webcam/main_webcam.py` — interactive MiniBatchKMeans version with UI cont
 - `Batch Size` (trackbar) controls how many pixels are used to update centroids at each `partial_fit`. Larger values give more stable updates but are slower.
 - `K` (Clusters) affects the granularity of detected colors.
 
-
+---
 
 ### Requirements
 
