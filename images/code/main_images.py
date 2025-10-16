@@ -7,7 +7,7 @@ from sklearn.cluster import KMeans
 
 name_image = "colors"
 
-image = cv2.imread(f'resources/{name_image}.jpg')
+image = cv2.imread(f'images/resources/{name_image}.jpg')
 image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
 # Reshape the image to a 2D array of pixels
@@ -33,5 +33,5 @@ plt.show()
 # Change the pixel from RGB to GBR for cv2
 segmented_image = segmented_image[:, :, ::-1]
 
-output_path = os.path.join("output", f"output_{name_image}_{number_of_colors}.jpg")
+output_path = os.path.join("images/output", f"output_{name_image}_{number_of_colors}.jpg")
 cv2.imwrite(output_path, segmented_image)

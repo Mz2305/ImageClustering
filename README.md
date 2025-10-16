@@ -1,50 +1,57 @@
 # ImageClustering
 
-A small Python project that performs color-based image segmentation using KMeans clustering. The script clusters the pixels of an input image to extract dominant colors and produces a segmented image and a saved matplotlib figure comparing the original and the segmented result.
+Python project for image segmentation and color clustering using KMeans. The repository contains scripts for processing static images and live webcam components that perform clustering using KMeans and MiniBatchKMeans.
 
 ## Repository structure
 
-- `code/`
-	- `main.py` — main script that reads an image from `resources/`, applies KMeans clustering, displays the figure and saves outputs to `output/`.
-- `resources/` — input sample images (e.g. `colors.jpg`, `person.jpg`).
-- `output/` — generated images (segmented images and saved figures).
+- `images` - Static images scripts
+	- `code/` — main scripts:
+		- `main_images.py` — offline image clustering scripts (read from `resources/`, save to `output/`).
+	- `resources/` — sample input images (e.g. `colors.jpg`, `person.jpg`).
+	- `output/` — resulting segmented images and saved figures.
+- `webcam/` — Webcam scripts
+	- `main_webcam.py` — interactive MiniBatchKMeans version with trackbars for `K` and `batch_size` and keyboard controls.
 
-## Code highlights
+## Image clustering (offline)
 
-- The script reads the image with OpenCV (`cv2.imread`) and converts it to RGB for display with matplotlib.
-- The image is reshaped to a 2D array of pixels and KMeans is used to cluster colors into `number_of_colors` clusters.
-- The cluster centers are used to create a segmented image where each pixel is replaced by its cluster center color.
-- The script saves both the matplotlib figure (`fig.savefig`) and the segmented image (converted back to BGR before `cv2.imwrite`).
+1. Put an input image in `images/resources/` (e.g. `images/resources/colors.jpg`).
+2. Set the image name in `images/code/main_images.py` (variable `name_image`).
+3. Run
+4. In `images/output/` you will see `output_<name>_X.jpg`, that represent the segmented image (X may indicate the number of clusters).
 
-## Example
 
-Run the script to produce the outputs, then include the generated images in the README using relative paths. Replace `colors` with the image name you used.
+### Example — Before & After (with slider)
 
 | Original | Segmented |
 |---|---|
-| ![Original image](resources/colors.jpg) | ![Segmented image](output/output_colors_5.jpg) |
-| *resources/colors.jpg* | *output/output_colors_5.jpg* |
+| ![Original](images/resources/colors.jpg) | ![Segmented](images/output/output_colors_10.jpg) |
+| *images/resources/colors.jpg* | *images/output/output_colors_10.jpg* |
 
-## Requirements
+## Webcam (live) — new project piece
 
-- Python 3.8+ (tested with a modern CPython)
-- Packages:
-	- opencv-python (cv2)
-	- numpy
-	- matplotlib
-	- scikit-learn
+Run `webcam/main_webcam.py` — interactive MiniBatchKMeans version with UI controls:
+  - "Controls" window with trackbars:
+    - `Clusters K` — number of clusters (K)
+    - `Batch Size` — mini-batch size used by MiniBatchKMeans
+  - Keyboard controls:
+    - `q` — quit
+    - `d` / `a` — increase / decrease K
+    - `w` / `s` — increase / decrease batch
+  - Shows FPS in the console.
+  - Displays the live webcam feed alongside the segmented output
 
-## Usage
+### Tips for `main_webcam.py` (MiniBatchKMeans)
 
-1. Place an input image in `resources/`, for example `resources/colors.jpg`.
-2. Edit `code/main.py` to change `name_image` or other parameters (number of clusters).
-3. Run the script from the repository root
+- `Batch Size` (trackbar) controls how many pixels are used to update centroids at each `partial_fit`. Larger values give more stable updates but are slower.
+- `K` (Clusters) affects the granularity of detected colors.
 
-Expected outputs (written to `output/`):
-- `figure_<name>.png` — saved matplotlib figure showing the original image and the segmented result.
-- `output_<name>.jpg` — segmented image saved with OpenCV.
 
-## Troubleshooting
 
-- If `cv2.imread` returns `None`, check the path to `resources/<name>.jpg` and that the file exists.
-- If matplotlib windows do not appear when running remotely (e.g., over SSH), consider saving the figure (`fig.savefig`) and running headless.
+### Requirements
+
+- Python 3.8+
+- Python packages:
+  - opencv-python
+  - numpy
+  - scikit-learn
+  - matplotlib (optional)
